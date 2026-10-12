@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import app.reseam.runtime.Reseam;
+
 @SuppressWarnings("unused")
 public final class SettingsEntry {
     private static final String TITLE = "Reseam Settings";
@@ -54,7 +56,7 @@ public final class SettingsEntry {
 
     // For a row the patch added to the app's own settings layout, so it looks like the app's other rows.
     public static void openOnClick(View row) {
-        if (row != null) row.setOnClickListener(view -> ReseamSettingsScreen.open());
+        if (row != null) row.setOnClickListener(view -> Reseam.openSettings(SettingsCache.BUNDLE));
     }
 
     private static View row(Context context, TypedArray theme, float density) {
@@ -66,7 +68,7 @@ public final class SettingsEntry {
         row.setPadding(padding, 0, padding, 0);
         Drawable ripple = theme.getDrawable(RIPPLE);
         if (ripple != null) row.setBackground(ripple);
-        row.setOnClickListener(view -> ReseamSettingsScreen.open());
+        row.setOnClickListener(view -> Reseam.openSettings(SettingsCache.BUNDLE));
 
         TextView title = new TextView(context);
         title.setText(TITLE);
