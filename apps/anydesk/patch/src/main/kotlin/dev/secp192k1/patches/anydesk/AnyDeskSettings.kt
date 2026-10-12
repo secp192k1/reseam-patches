@@ -6,11 +6,10 @@ import app.reseam.patch.before
 import app.reseam.patch.klass
 import app.reseam.patch.method
 import app.reseam.patch.point
+import app.reseam.patch.settings.openSettings
 import app.reseam.patch.settings.settingsHost
 import app.reseam.patch.settings.toggle
 import dev.secp192k1.patches.settings.SETTINGS_TITLE
-import dev.secp192k1.patches.settings.installSettingsRuntime
-import dev.secp192k1.patches.settings.openSettingsScreen
 
 internal object AnyDeskSettings {
     val hideLicenseBanner by toggle(
@@ -56,7 +55,6 @@ val anyDeskSettings = settingsHost("anydesk") {
     compatibleWith(PACKAGE)
 
     install {
-        installSettingsRuntime()
         val wrenchIcon = resources.id("drawable", "ic_nav_settings")?.toInt() ?: error("The app has no ic_nav_settings drawable")
         val categoryAdapter = categoryList.point("category adapter") { invokeVirtual { owner("android.widget.ArrayAdapter"); name("clear") } }.writer(0).field()
         val sectionHeader = categoryList.point("section header") { invokeDirect { name("<init>"); params(Type.String, Type.String) } }.callee()
@@ -84,7 +82,7 @@ val anyDeskSettings = settingsHost("anydesk") {
             val list = param(0)
             whenEqual(param(1), list.callVirtual("android.widget.AdapterView", "getCount", "()I").minus(int(1))) {
                 list.callVirtual("android.widget.AbsListView", "setItemChecked", "(IZ)V", thisObject.field(selectedCategory), bool(true))
-                openSettingsScreen()
+                openSettings()
                 returnVoid()
             }
         }
