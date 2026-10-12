@@ -52,6 +52,11 @@ public final class SettingsEntry {
         }
     }
 
+    // For a row the patch added to the app's own settings layout, so it looks like the app's other rows.
+    public static void openOnClick(View row) {
+        if (row != null) row.setOnClickListener(view -> ReseamSettingsScreen.open());
+    }
+
     private static View row(Context context, TypedArray theme, float density) {
         LinearLayout row = new LinearLayout(context);
         row.setOrientation(LinearLayout.HORIZONTAL);

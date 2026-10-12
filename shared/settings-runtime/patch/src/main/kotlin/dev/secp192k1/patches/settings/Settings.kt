@@ -31,6 +31,7 @@ private object SettingsScreen : ExtClass("$SETTINGS_RUNTIME.ReseamSettingsScreen
 
 private object SettingsEntry : ExtClass("$SETTINGS_RUNTIME.SettingsEntry") {
     val addSettingsRow by static(Type.View, returns = Type.View)
+    val openOnClick by static(Type.View)
 }
 
 // Loads the settings on app start, before patched code reads them
@@ -46,6 +47,11 @@ fun installSettingsEntry(settingsScreen: MethodTarget) {
 
 fun CodeScope.openSettingsScreen() {
     call(SettingsScreen.open)
+}
+
+// Makes a Reseam Settings row the patch added to the app's own layout open the settings screen
+fun CodeScope.openSettingsOnClick(row: ValueRef) {
+    call(SettingsEntry.openOnClick, row)
 }
 
 // Runs the block only while the toggle is on

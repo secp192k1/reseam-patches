@@ -1,6 +1,8 @@
 package dev.secp192k1.views;
 
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.ViewTreeObserver;
 
 @SuppressWarnings("unused")
@@ -14,6 +16,22 @@ public final class HiddenViews {
         Guard guard = new Guard(view);
         view.addOnAttachStateChangeListener(guard);
         if (view.isAttachedToWindow()) guard.onViewAttachedToWindow(view);
+    }
+
+    public static void keepAncestorGone(View view, int levels, int siblingsBefore) {
+        View ancestor = view;
+        for (int level = 0; level < levels && ancestor != null; level++) {
+            ViewParent parent = ancestor.getParent();
+            ancestor = parent instanceof View ? (View) parent : null;
+        }
+        if (ancestor == null) return;
+
+        keepGone(ancestor);
+        if (siblingsBefore == 0 || !(ancestor.getParent() instanceof ViewGroup group)) return;
+        int index = group.indexOfChild(ancestor);
+        for (int sibling = Math.max(0, index - siblingsBefore); sibling < index; sibling++) {
+            keepGone(group.getChildAt(sibling));
+        }
     }
 
     private static final class Guard implements View.OnAttachStateChangeListener, ViewTreeObserver.OnPreDrawListener {
