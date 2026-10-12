@@ -125,6 +125,24 @@ internal object TwitchSettings {
         ),
         key = "twitch.default_video_quality",
     )
+    val skipContentWarnings by toggle(
+        "Skip content warnings",
+        summary = "Starts streams and clips with content labels without the Just one second screen.",
+        default = true,
+        key = "twitch.skip_content_warnings",
+    )
+    val hideAudienceNotice by toggle(
+        "Hide audience notice",
+        summary = "Removes the Intended for certain audiences notice from streams and clips.",
+        default = true,
+        key = "twitch.hide_audience_notice",
+    )
+    val skipContentLimits by toggle(
+        "Skip user content limitations",
+        summary = "Plays content you limited in your content preferences without the Watch Anyway screen.",
+        default = true,
+        key = "twitch.skip_content_limits",
+    )
     val startOnFollowing by toggle(
         "Start on Following",
         summary = "Opens Home on the Following page.",
