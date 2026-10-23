@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="section_declutter">Declutter</string>
+
+    <string name="hide_license_banner">Hide license banner</string>
+    <string name="hide_license_banner_summary">Removes the license banner from the main screen and PiP.</string>
+    <string name="hide_microphone_button">Hide microphone button</string>
+    <string name="hide_microphone_button_summary">Removes the microphone button from the address fields.</string>
+    <string name="hide_news_tiles">Hide news tiles</string>
+    <string name="hide_news_tiles_summary">Removes the news tiles from the main screen.</string>
+    <string name="hide_telemetry_prompt">Hide telemetry prompt</string>
+    <string name="hide_telemetry_prompt_summary">Removes the main screen tile that asks to share usage data.</string>
+    <string name="hide_license_tile">Hide license tile</string>
+    <string name="hide_license_tile_summary">Removes the colored tile with a link for the license settings.</string>
+</resources>

@@ -1,0 +1,5 @@
+[bundle]
+name = "secp192k1-patches"
+author = "Koi Phishing 🎏"
+description = "something smells fishy..."
+format_version = 1
