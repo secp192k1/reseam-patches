@@ -18,7 +18,7 @@
 
     <string name="start_tab">Start tab</string>
     <string name="start_tab_summary">The screen to open when the app starts.</string>
-    <string name="start_tab_search">Search train, like Train Status PT</string>
+    <string name="start_tab_search">Search train (default)</string>
     <string name="start_tab_departures">Arrivals and departures</string>
 
     <string name="tracking_interval">Tracking interval</string>

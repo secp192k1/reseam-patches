@@ -15,7 +15,7 @@ import dev.secp192k1.trainstatus.settings.TrainStatusStrings
 val chooseStartTab = patch("Choose start tab") {
     description("Picks the screen the app opens on.")
     compatibleWith(TRAINSTATUS)
-    settings(trainStatusSettings, section(TrainStatusStrings.sectionStart, StartSettings.startTab))
+    settings(trainStatusSettings, section(TrainStatusStrings.sectionNavigation, StartSettings.startTab))
 
     execute {
         val departuresTabId = resources.id("id", "texthorarios40")?.toInt() ?: error("The app has no id/texthorarios40")
