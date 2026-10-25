@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="section_privacy">Privacy</string>
+    <string name="section_updates">Updates</string>
     <string name="section_developer">Developer</string>
 
     <string name="block_trackers">Block trackers</string>
     <string name="block_trackers_summary">Turns off comScore, Nielsen, Sentry, Crashlytics, Sprig and Branch.</string>
+    <string name="disable_update_prompt">Disable update prompt</string>
+    <string name="disable_update_prompt_summary">Stops the prompt that offers a newer version from Google Play.</string>
     <string name="debug_mode">Debug mode</string>
     <string name="debug_mode_summary">Shows the staff debug menu in settings, with its debug settings, experiments and logs.</string>
 </resources>
