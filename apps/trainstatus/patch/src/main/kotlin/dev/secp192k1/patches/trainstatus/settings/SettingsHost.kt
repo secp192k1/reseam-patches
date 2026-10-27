@@ -5,6 +5,7 @@ import app.reseam.patch.method
 import app.reseam.patch.settings.openSettings
 import app.reseam.patch.settings.settingsHost
 import dev.secp192k1.patches.brand.SETTINGS_TITLE
+import dev.secp192k1.patches.brand.publisherLinks
 import dev.secp192k1.patches.brand.reseamBrand
 import dev.secp192k1.patches.trainstatus.TRAINSTATUS
 import dev.secp192k1.patches.trainstatus.shared.mainActivity
@@ -14,6 +15,7 @@ val mainActivityOptionsItemSelected = mainActivity.method("onOptionsItemSelected
 val trainStatusSettings = settingsHost("trainstatus") {
     compatibleWith(TRAINSTATUS)
     brand(reseamBrand)
+    about(publisherLinks)
 
     install {
         val settingsItemId = resources.addId("reseam_settings_item") ?: error("Could not add id/reseam_settings_item")

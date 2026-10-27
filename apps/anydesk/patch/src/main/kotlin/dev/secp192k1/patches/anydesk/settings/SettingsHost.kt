@@ -11,6 +11,7 @@ import app.reseam.patch.settings.openSettings
 import app.reseam.patch.settings.settingsHost
 import dev.secp192k1.patches.anydesk.ANYDESK
 import dev.secp192k1.patches.brand.SETTINGS_TITLE
+import dev.secp192k1.patches.brand.publisherLinks
 import dev.secp192k1.patches.brand.reseamBrand
 
 private const val ARRAY_ADAPTER = "android.widget.ArrayAdapter"
@@ -60,6 +61,7 @@ val settingsCategoryTap = method("settingsCategoryTap") {
 val anyDeskSettings = settingsHost("anydesk") {
     compatibleWith(ANYDESK)
     brand(reseamBrand)
+    about(publisherLinks)
 
     install {
         val wrenchIconId = resources.id("drawable", "ic_nav_settings")?.toInt() ?: error("The app has no drawable/ic_nav_settings")
