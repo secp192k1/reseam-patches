@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="section_ads">Ads</string>
+    <string name="section_prompts">Prompts</string>
+    <string name="section_appearance">Appearance</string>
+
+    <string name="hide_ads">Hide ads</string>
+    <string name="hide_ads_summary">Removes the ads and Super offers shown after lessons.</string>
+    <string name="hide_rate_prompt">Hide rate prompt</string>
+    <string name="hide_rate_prompt_summary">Never asks you to rate the app after a lesson.</string>
+    <string name="disable_update_wall">Disable update wall</string>
+    <string name="disable_update_wall_summary">Removes the screens that ask or force you to update the app.</string>
+    <string name="keep_app_icon">Keep app icon</string>
+    <string name="keep_app_icon_summary">Keeps the regular launcher icon instead of the streak and seasonal icons Duolingo swaps in.</string>
+</resources>
