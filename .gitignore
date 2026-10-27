@@ -1,6 +1,7 @@
 build/
 .gradle/
 .kotlin/
+node_modules/
 out/
 
 .idea/

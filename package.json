@@ -1,0 +1,16 @@
+{
+    "name": "secp192k1-patches",
+    "version": "0.0.0",
+    "private": true,
+    "license": "AGPL-3.0-or-later",
+    "scripts": {
+        "release": "semantic-release"
+    },
+    "devDependencies": {
+        "@semantic-release/commit-analyzer": "^13.0.1",
+        "@semantic-release/git": "^11.0.1",
+        "@semantic-release/npm": "^13.2.0",
+        "@semantic-release/release-notes-generator": "^14.1.1",
+        "semantic-release": "^25.0.9"
+    }
+}
