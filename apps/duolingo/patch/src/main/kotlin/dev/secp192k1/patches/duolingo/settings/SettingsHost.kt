@@ -1,9 +1,7 @@
 package dev.secp192k1.patches.duolingo.settings
 
 import app.reseam.patch.Type
-import app.reseam.patch.after
 import app.reseam.patch.before
-import app.reseam.patch.klass
 import app.reseam.patch.method
 import app.reseam.patch.point
 import app.reseam.patch.settings.openSettings
@@ -15,29 +13,19 @@ import dev.secp192k1.patches.brand.reseamBrand
 import dev.secp192k1.patches.duolingo.DUOLINGO
 
 private const val FUNCTION0 = "Lkotlin/jvm/functions/Function0;"
+private const val SETTINGS_BUTTON_TAG = "reseamSettingsButton"
 
-// This state of the buttons at the bottom of Settings is a data class, so its generated toString keeps the field names
-val bottomButtonsState = klass("bottomButtonsState") {
-    strings("BottomButtonsSection(showDebugMenu=")
-}
-
-val bottomButtonsStateCreate = bottomButtonsState.method("<init>")
-
-// Duolingo shows its Debug options button above Sign out only to staff
-val showDebugMenu = bottomButtonsState.method("toString").point("showDebugMenu") {
-    string("BottomButtonsSection(showDebugMenu=")
-}.next { field { } }.field("showDebugMenu")
-
-// The Compose function that draws those buttons, found by their test tags
+// The Compose function that draws the buttons at the bottom of Settings, found by the Sign out test tag
 val bottomButtonsSection = method("bottomButtonsSection") {
-    strings("debugOptionsButton", "signOutButton")
+    strings("signOutButton")
 }
 
-val debugOptionsButton = bottomButtonsSection.point("debugOptionsButton") {
-    string("debugOptionsButton")
+// Sign out shows for every account, so the entry is drawn right before it with the same button
+val signOutButton = bottomButtonsSection.point("signOutButton") {
+    string("signOutButton")
 }.next { invokeStatic { hasParam(FUNCTION0) } }
 
-val settingsButton = debugOptionsButton.callee("settingsButton")
+val bottomButton = signOutButton.callee("bottomButton")
 
 val duolingoSettings = settingsHost("duolingo") {
     compatibleWith(DUOLINGO)
@@ -50,19 +38,29 @@ val duolingoSettings = settingsHost("duolingo") {
             returnVoid()
         }
 
-        // The Debug options button becomes the entry, so it shows for everyone and opens Reseam Settings
-        bottomButtonsStateCreate.after {
-            thisObject.set(showDebugMenu, bool(true))
+        // The button takes its label before its test tag, and its click handler is its only Function0 parameter
+        val parameters = bottomButton.parameterTypes
+        val label = parameters.indexOf(Type.String)
+        val testTag = parameters.lastIndexOf(Type.String)
+        val onClick = parameters.indexOf(FUNCTION0)
+        require(label >= 0 && label != testTag) { "The bottom button no longer takes a label and a test tag" }
+        require(onClick == parameters.lastIndexOf(FUNCTION0)) { "The bottom button no longer takes a single click handler" }
+
+        val signOutCall = parameters.foldIndexed(signOutButton) { index, capturedCall, type ->
+            capturedCall.captureArgumentAs("argument$index", index, type)
         }
 
-        // The button takes its label before its test tag, and its click handler is its only function
-        val buttonParameters = settingsButton.parameterTypes
-        debugOptionsButton
-            .captureArgumentAs("label", buttonParameters.indexOf(Type.String), Type.String)
-            .captureArgumentAs("onClick", buttonParameters.indexOf(FUNCTION0), FUNCTION0)
-            .before {
-                capture("label").assign(string(SETTINGS_TITLE))
-                capture("onClick").assign(SettingsEntry.openSettingsOnClick())
+        // The entry reuses the composer and layout arguments of Sign out
+        signOutCall.before {
+            val arguments = parameters.indices.map { index ->
+                when (index) {
+                    label -> string(SETTINGS_TITLE)
+                    testTag -> string(SETTINGS_BUTTON_TAG)
+                    onClick -> SettingsEntry.openSettingsOnClick()
+                    else -> capture("argument$index")
+                }
             }
+            call(bottomButton, *arguments.toTypedArray())
+        }
     }
 }

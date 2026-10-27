@@ -3,6 +3,7 @@
     <string name="section_ads">Ads</string>
     <string name="section_prompts">Prompts</string>
     <string name="section_appearance">Appearance</string>
+    <string name="section_developer">Developer</string>
 
     <string name="hide_ads">Hide ads</string>
     <string name="hide_ads_summary">Removes the ads and Super offers shown after lessons.</string>
@@ -12,4 +13,6 @@
     <string name="disable_update_wall_summary">Removes the screens that ask or force you to update the app.</string>
     <string name="keep_app_icon">Keep app icon</string>
     <string name="keep_app_icon_summary">Keeps the regular launcher icon instead of the streak and seasonal icons Duolingo swaps in.</string>
+    <string name="enable_debug_menu">Enable debug menu</string>
+    <string name="enable_debug_menu_summary">Adds the Debug options button to the bottom of Settings, which opens Duolingo\'s staff debug menu.</string>
 </resources>
