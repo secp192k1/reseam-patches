@@ -1,17 +1,13 @@
-<p align="center">
-  <img src="https://reseam.app/logo.svg" alt="Reseam logo" width="96">
-</p>
+# secp192k1 Reseam patches
 
-<h1 align="center">Reseam patch bundle template</h1>
+A [Reseam](https://reseam.app) patch bundle for Android apps.
 
-Start here to write your own patches for [Reseam](https://reseam.app). Copy this repository, rename a few things, and you have a bundle that builds, signs itself, and publishes releases Reseam Manager can install.
+[![Add to Reseam Manager](https://img.shields.io/badge/Add_to_Reseam_Manager-51AE79?style=for-the-badge&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0xMC41IDNoM3Y3LjVIMjF2M2gtNy41VjIxaC0zdi03LjVIM3YtM2g3LjV6Ii8%2BPC9zdmc%2B)](https://reseam.app/add/?url=https://github.com/secp192k1/reseam-patches)
 
-It ships two example patches that work on any app:
+## Patches
 
-- `Enable debugging` edits the manifest.
-- `Allow screenshots` redirects calls into Kotlin code shipped in the bundle (an extension).
-
-The [docs](https://reseam.app/docs/authoring/start/) walk through this template step by step.
+<!-- PATCHES:START -->
+<!-- PATCHES:END -->
 
 ## Setup
 
@@ -20,13 +16,7 @@ The [docs](https://reseam.app/docs/authoring/start/) walk through this template 
 - The `reseam` CLI, on `PATH` or at the path in `RESEAM_BIN`. Use the version that matches the plugin version in `settings.gradle.kts`. Releases ship Linux x64 and Windows x64 binaries; on other platforms [build it from source](https://reseam.app/docs/cli/install/).
 - A signing key: `reseam bundle keygen --out ~/.reseam/bundle-signing.key`. It prints the public key users will trust. Keep the key file private and out of the repository.
 
-## Make it yours
-
-1. Set `name`, `author`, and `description` in `manifest.toml`, and `rootProject.name` in `settings.gradle.kts`.
-2. Rename `apps/example` to the app you patch and change the `app.example` packages to your own.
-3. Replace the example patches with your own.
-
-Layout:
+## Layout
 
 ```text
 manifest.toml                     bundle name, author, description
@@ -43,29 +33,26 @@ Modules need no build script. The `app.reseam.workspace` plugin configures them 
 
 ```shell
 ./gradlew bundle
-reseam bundle list build/reseam/example-patches.reseam
+reseam bundle list build/reseam/secp192k1-patches.reseam
 reseam patch app.apk \
-  --bundle build/reseam/example-patches.reseam \
+  --bundle build/reseam/secp192k1-patches.reseam \
   --trust <public key> \
-  --enable "Enable debugging" \
+  --enable "<Patch name>" \
   --output patched.apk
 ```
 
 ## Release
 
-The workflow in `.github/workflows/release.yml` runs on `v*` tags, on GitHub and on Forgejo, including Codeberg. It builds and signs the bundle, then [`reseam release patches`](https://reseam.app/docs/cli/release/) adds the release to the `patches.json` of your latest release with the commit subjects since the previous tag as its notes, and publishes both on a release.
+Every push to `main` runs `.github/workflows/release.yml`. [semantic-release](https://github.com/semantic-release/semantic-release) picks the next version from the [Conventional Commits](https://www.conventionalcommits.org/) since the last tag. A `fix` commit bumps the patch version, a `feat` commit the minor version, and a breaking change the major version. Other commit types do not release. The workflow then builds and signs the bundle, publishes it with [`reseam release patches`](https://reseam.app/docs/cli/release/), rewrites the patch list above, and commits the updated `package.json` and `README.md` to `main`.
 
-1. Add the signing key as the repository secret `BUNDLE_SIGNING_KEY_B64`: `base64 -w0 ~/.reseam/bundle-signing.key`.
-2. On Forgejo, set the repository variable `RUNNER` to the label of a runner with Java and Node.js. GitHub uses `ubuntu-latest`.
-3. Push a tag: `git tag v0.1.0 && git push origin v0.1.0`.
+Add the signing key as the repository secret `BUNDLE_SIGNING_KEY_B64`: `base64 -w0 ~/.reseam/bundle-signing.key`.
 
-Share your patch source with this link. It opens Reseam Manager, which shows the source's apps, patches and signing key before adding it, and keeps it up to date from your latest release. Every release lists the link too.
+The workflow also creates [GitHub build provenance attestations](https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations) for `secp192k1-patches.reseam`. Verify a downloaded bundle with the GitHub CLI:
 
-```text
-https://reseam.app/add/?url=https%3A%2F%2Fgithub.com%2F<owner>%2F<repo>
+```shell
+gh attestation verify secp192k1-patches.reseam --repo secp192k1/reseam-patches \
+  --signer-workflow secp192k1/reseam-patches/.github/workflows/release.yml
 ```
-
-Without Reseam Manager, the link opens a page with the steps to add the source. Publish your public key where users can check it against the one Reseam Manager shows.
 
 When you move to a new Reseam version, bump the plugin version in `settings.gradle.kts`. The release workflow downloads the CLI of that same version.
 
