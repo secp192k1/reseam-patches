@@ -5,6 +5,7 @@ import app.reseam.patch.method
 import app.reseam.patch.settings.openSettings
 import app.reseam.patch.settings.settingsHost
 import dev.secp192k1.patches.brand.SETTINGS_TITLE
+import dev.secp192k1.patches.brand.publisherLinks
 import dev.secp192k1.patches.brand.reseamBrand
 import dev.secp192k1.patches.twitch.TWITCH
 import dev.secp192k1.patches.twitch.shared.mainSettingsFragment
@@ -15,6 +16,7 @@ val mainSettingsCreateView = mainSettingsFragment.method("onCreateView")
 val twitchSettings = settingsHost("twitch") {
     compatibleWith(TWITCH)
     brand(reseamBrand)
+    about(publisherLinks)
 
     install {
         SettingsEntry.openSettings.implement {

@@ -1,6 +1,5 @@
 package dev.secp192k1.patches.twitch.trackers
 
-import app.reseam.patch.PointsTarget
 import app.reseam.patch.Type
 import app.reseam.patch.klass
 import app.reseam.patch.method
@@ -8,18 +7,16 @@ import app.reseam.patch.methods
 import app.reseam.patch.patch
 import app.reseam.patch.point
 import app.reseam.patch.points
-import app.reseam.patch.settings.GateScope
 import app.reseam.patch.settings.gate
 import app.reseam.patch.settings.section
 import dev.secp192k1.patches.twitch.TWITCH
 import dev.secp192k1.patches.twitch.settings.twitchSettings
+import dev.secp192k1.patches.twitch.shared.cutOffServer
 import dev.secp192k1.twitch.settings.PrivacySettings
 import dev.secp192k1.twitch.settings.TwitchStrings
 
 private const val BRANCH_API = "https://api2.branch.io/"
 private const val BRANCH_CDN = "https://cdn.branch.io/"
-// Nothing listens on the discard port, so a request sent here fails at once
-private const val DISCARD_SERVER = "https://127.0.0.1:9/"
 
 // R8 keeps the names of these public SDK classes
 val comScore = klass("com.comscore.Analytics")
@@ -46,20 +43,6 @@ val nielsenPing = method("nielsenPing") {
 
 val branchApiUrls = methods("branchApiUsers") { stringsStartingWith(BRANCH_API) }.points("branchApiUrls") { stringContains(BRANCH_API) }
 val branchCdnUrls = methods("branchCdnUsers") { stringsStartingWith(BRANCH_CDN) }.points("branchCdnUrls") { stringContains(BRANCH_CDN) }
-
-// Points every URL on the server at the discard port
-private fun GateScope.cutOffServer(urls: PointsTarget, server: String): Int {
-    val points = urls.all
-    require(points.isNotEmpty()) { "The app no longer references $server" }
-
-    points.forEach { url ->
-        url.captureAs("url").after {
-            val cutOff = capture("url").callVirtual("java.lang.String", "replace", "(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)Ljava/lang/String;", string(server), string(DISCARD_SERVER))
-            capture("url").assign(cutOff)
-        }
-    }
-    return points.size
-}
 
 @Suppress("unused")
 val blockTrackers = patch("Block trackers") {
