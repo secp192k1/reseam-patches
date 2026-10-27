@@ -3,7 +3,7 @@ package dev.secp192k1.patches.anydesk.settings
 import app.reseam.patch.Type
 import app.reseam.patch.after
 import app.reseam.patch.before
-import app.reseam.patch.dex.Opcode
+import app.reseam.patch.field
 import app.reseam.patch.klass
 import app.reseam.patch.method
 import app.reseam.patch.point
@@ -46,10 +46,10 @@ val showSettingsCategory = method("showSettingsCategory") {
     params(LIST_VIEW, Type.Int, Type.Boolean)
 }
 
-val selectedCategory = showSettingsCategory.point("selectedCategory") {
-    opcode(Opcode.IPUT)
-    field { owner(SETTINGS_CATEGORY_FRAGMENT); type(Type.Int) }
-}.field()
+val selectedCategory = showSettingsCategory.field("selectedCategory") {
+    owner(SETTINGS_CATEGORY_FRAGMENT)
+    type(Type.Int)
+}
 
 val settingsCategoryTap = method("settingsCategoryTap") {
     inClass(settingsCategoryFragment)

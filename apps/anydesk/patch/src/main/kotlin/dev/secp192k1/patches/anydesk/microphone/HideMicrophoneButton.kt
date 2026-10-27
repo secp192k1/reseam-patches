@@ -6,7 +6,7 @@ import dev.secp192k1.anydesk.settings.AnyDeskStrings
 import dev.secp192k1.anydesk.settings.DeclutterSettings
 import dev.secp192k1.patches.anydesk.ANYDESK
 import dev.secp192k1.patches.anydesk.settings.anyDeskSettings
-import dev.secp192k1.patches.anydesk.shared.keepGoneById
+import dev.secp192k1.patches.views.keepGoneById
 
 @Suppress("unused")
 val hideMicrophoneButton = patch("Hide microphone button") {
