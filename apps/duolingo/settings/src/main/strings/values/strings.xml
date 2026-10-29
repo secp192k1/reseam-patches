@@ -20,4 +20,6 @@
     <string name="enable_debug_menu_summary">Adds the Debug options button to the bottom of Settings and lists every category in Duolingo\'s staff debug menu.</string>
     <string name="unlimited_energy">Unlimited energy</string>
     <string name="unlimited_energy_summary">Gives you unlimited energy, so lessons and mistakes never use it up.</string>
+    <string name="unlimited_hearts">Unlimited hearts</string>
+    <string name="unlimited_hearts_summary">Keeps your hearts full in Legendary levels and Jump here tests, so mistakes never end them.</string>
 </resources>
