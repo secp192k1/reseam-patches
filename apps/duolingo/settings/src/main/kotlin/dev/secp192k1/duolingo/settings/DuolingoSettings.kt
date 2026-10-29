@@ -25,4 +25,5 @@ object AppearanceSettings : SettingsGroup(DuolingoStrings) {
 
 object DeveloperSettings : SettingsGroup(DuolingoStrings) {
     val enableDebugMenu by toggle(default = true, key = "duolingo.enable_debug_menu", icon = lucide("bug"))
+    val unlimitedEnergy by toggle(default = true, key = "duolingo.unlimited_energy", icon = lucide("zap"))
 }

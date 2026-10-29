@@ -18,4 +18,6 @@
     <string name="keep_app_icon_summary">Keeps the regular launcher icon instead of the streak and seasonal icons Duolingo swaps in.</string>
     <string name="enable_debug_menu">Enable debug menu</string>
     <string name="enable_debug_menu_summary">Adds the Debug options button to the bottom of Settings and lists every category in Duolingo\'s staff debug menu.</string>
+    <string name="unlimited_energy">Unlimited energy</string>
+    <string name="unlimited_energy_summary">Gives you unlimited energy, so lessons and mistakes never use it up.</string>
 </resources>
