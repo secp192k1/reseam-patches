@@ -1,5 +1,6 @@
 package dev.secp192k1.patches.duolingo.debug
 
+import app.reseam.patch.Type
 import app.reseam.patch.klass
 import app.reseam.patch.method
 import app.reseam.patch.patch
@@ -10,6 +11,8 @@ import dev.secp192k1.duolingo.settings.DeveloperSettings
 import dev.secp192k1.duolingo.settings.DuolingoStrings
 import dev.secp192k1.patches.duolingo.DUOLINGO_PINNED
 import dev.secp192k1.patches.duolingo.settings.duolingoSettings
+
+private const val INELIGIBLE_USER_LOG = "Ineligible user accessed the debug menu"
 
 // This state of the buttons at the bottom of Settings is a data class, so its generated toString keeps the field names
 val bottomButtonsState = klass("bottomButtonsState") {
@@ -30,10 +33,19 @@ val debugCategory = klass("debugCategory") {
 // Duolingo's R8 rules keep this getter's name, and outside debug builds the menu lists only the categories it allows
 val allowOnReleaseBuilds = debugCategory.method("getAllowOnReleaseBuilds")
 
+// Every debug screen checks the account when it opens, and closes at once after this log for anyone who is not staff
+val debugAccessCheck = method("debugAccessCheck") {
+    strings(INELIGIBLE_USER_LOG)
+}
+
+val debugAccessAllowed = debugAccessCheck.point("debugAccessAllowed") {
+    string(INELIGIBLE_USER_LOG)
+}.previous { resultOf(Type.Boolean) }
+
 @Suppress("unused")
 val enableDebugMenu = patch("Enable debug menu") {
     description("Adds the Debug options button to the bottom of Settings and lists every category in Duolingo's staff debug menu.")
-    // Pinned because a wrong match would set a field without any error
+    // Pinned because a wrong match would set a field or overwrite a check without any error
     compatibleWith(DUOLINGO_PINNED)
     settings(duolingoSettings, section(DuolingoStrings.sectionDeveloper, DeveloperSettings.enableDebugMenu))
 
@@ -43,6 +55,9 @@ val enableDebugMenu = patch("Enable debug menu") {
                 thisObject.set(showDebugMenu, bool(true))
             }
             allowOnReleaseBuilds.alwaysReturn(true)
+            debugAccessAllowed.captureAs("allowed").after {
+                capture("allowed").assign(bool(true))
+            }
         }
     }
 }
