@@ -9,6 +9,10 @@ object AdsSettings : SettingsGroup(DuolingoStrings) {
     val hideAds by toggle(default = true, key = "duolingo.hide_ads", icon = lucide("megaphone-off"))
 }
 
+object PrivacySettings : SettingsGroup(DuolingoStrings) {
+    val blockTrackers by toggle(default = true, key = "duolingo.block_trackers", icon = lucide("shield"))
+}
+
 object PromptSettings : SettingsGroup(DuolingoStrings) {
     val hideRatePrompt by toggle(default = true, key = "duolingo.hide_rate_prompt", icon = lucide("eye-off"))
     val disableUpdateWall by toggle(default = true, key = "duolingo.disable_update_wall", icon = lucide("refresh-cw-off"))
@@ -21,5 +25,4 @@ object AppearanceSettings : SettingsGroup(DuolingoStrings) {
 
 object DeveloperSettings : SettingsGroup(DuolingoStrings) {
     val enableDebugMenu by toggle(default = true, key = "duolingo.enable_debug_menu", icon = lucide("bug"))
-    val apiUrl by text(default = "", key = "duolingo.api_url", icon = lucide("server"))
 }

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="section_ads">Ads</string>
+    <string name="section_privacy">Privacy</string>
     <string name="section_prompts">Prompts</string>
     <string name="section_appearance">Appearance</string>
     <string name="section_developer">Developer</string>
 
     <string name="hide_ads">Hide ads</string>
     <string name="hide_ads_summary">Removes the ads and Super offers shown after lessons.</string>
+    <string name="block_trackers">Block trackers</string>
+    <string name="block_trackers_summary">Turns off Adjust, and Sentry with its crash reports and session replays.</string>
     <string name="hide_rate_prompt">Hide rate prompt</string>
     <string name="hide_rate_prompt_summary">Never asks you to rate the app after a lesson.</string>
     <string name="disable_update_wall">Disable update wall</string>
@@ -14,5 +17,5 @@
     <string name="keep_app_icon">Keep app icon</string>
     <string name="keep_app_icon_summary">Keeps the regular launcher icon instead of the streak and seasonal icons Duolingo swaps in.</string>
     <string name="enable_debug_menu">Enable debug menu</string>
-    <string name="enable_debug_menu_summary">Adds the Debug options button to the bottom of Settings, which opens Duolingo\'s staff debug menu.</string>
+    <string name="enable_debug_menu_summary">Adds the Debug options button to the bottom of Settings and lists every category in Duolingo\'s staff debug menu.</string>
 </resources>
